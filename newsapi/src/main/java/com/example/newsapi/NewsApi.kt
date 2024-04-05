@@ -1,7 +1,7 @@
 package com.example.newsapi
 
 import com.example.newsapi.models.Article
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+
 import com.example.newsapi.models.Language
 import com.example.newsapi.models.Response
 import com.example.newsapi.models.SortBy
@@ -29,18 +29,20 @@ interface NewsApi {
 fun NewsApi(
     baseUrl: String,
     okHttpClient: OkHttpClient? = null,
+    json: Json,
 ): NewsApi{
-    val retrofit = retrofit(baseUrl, okHttpClient)
-    return retrofit.create()
+    return retrofit(baseUrl, okHttpClient, json).create()
 }
 
 private fun retrofit(
     baseUrl: String,
     okHttpClient: OkHttpClient?,
+    json: Json,
 ): Retrofit {
+//    val contentType = "application/json".toMediaType()
     val retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .run { if(okHttpClient != null) client(okHttpClient) else this }
+        .baseUrl("https://example.com/")
+//        .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
     return retrofit
 }
